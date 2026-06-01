@@ -1,6 +1,6 @@
 function Hero(){
     return (
-        <section>
+        <section class="hero">
             <h1>Detect Phishing Websites Before They Steal Your Data</h1>
 
             <p>AI-Powered phishing detection system for websites, emails and files.</p>
