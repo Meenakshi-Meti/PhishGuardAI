@@ -1,0 +1,33 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  background :black;
+  color: white;
+  font-family:Arial;
+}
+.navbar ul{
+  display:flex;
+  list-style:none;
+  gap:25px;
+}
+.hero{
+  text-align: center;
+  padding:120px 20px;
+}
+.hero h1{
+  font-size: 3rem;
+  max-width:800px;
+  margin:auto;
+}
+.hero p{
+  margin-top:20px;
+  font-size:2 rem;
+}
+.hero button{
+  margin-top:30px;
+  padding:12px 24px;
+  cursor:pointer;
+}
