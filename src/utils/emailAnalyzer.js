@@ -86,6 +86,8 @@ export function scoreEmail(text) {
       ? "Spam"
       : "Allow";
 
+  
+
   return {
     score,
     action,
@@ -180,12 +182,28 @@ export function scoreEmail(text) {
       : score > 7
       ? "Spam"
       : "Allow";
+  const riskLevel =
+  score >= 8
+    ? "High"
+    : score >= 5
+    ? "Medium"
+    : "Low";
+
+const suspiciousDomainCount =
+  domains.filter(
+    (d) =>
+      d.includes("secure") ||
+      d.includes("verify") ||
+      d.includes("login")
+  ).length;
 
   return {
     score,
     action,
     hits,
     domains,
+    riskLevel,
+    suspiciousDomainCount 
   };
 }
->>>>>>> 63456d0b229d82db8c2666a9d38f61765d6650d0
+
