@@ -121,3 +121,29 @@ export default function App() {
     </>
   );
 }
+function ThreatGauge({ analysis }) {
+  return (
+    <section className="gauge-card">
+
+      <h3>Threat Vector Score</h3>
+
+      <div className="gauge-number">
+        {analysis.score}/10
+      </div>
+
+      <div className="risk-bar">
+        <div
+          className="risk-fill"
+          style={{
+            width: `${analysis.score * 10}%`
+          }}
+        />
+      </div>
+
+      <p>{analysis.level}</p>
+
+    </section>
+  );
+}
+
+export default ThreatGauge;
