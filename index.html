@@ -9,5 +9,22 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <section className="security-banner">
+  <div className="banner-item">
+     System Status: Protected
+  </div>
+
+  <div className="banner-item">
+     Real-Time Analysis Active
+  </div>
+
+  <div className="banner-item">
+     Connected Nodes: {ledger.length}
+  </div>
+
+  <div className="banner-item">
+     Quarantined Senders: {quarantine.length}
+  </div>
+</section>
+  </body> 
 </html>
