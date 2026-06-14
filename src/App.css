@@ -80,3 +80,33 @@ body{
   font-weight: bold;
   color: #22c55e;
 }
+:root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+      --color-bg:#f4f4f0; --color-surface:#fbfbf8; --color-surface-2:#ffffff; --color-surface-offset:#ebe8e2; --color-surface-dynamic:#dfddd7; --color-divider:#d7d4cd; --color-border:#cfcbc4;
+      --color-text:#1f1d1a; --color-text-muted:#6a6863; --color-text-faint:#a6a39e; --color-text-inverse:#fcfbf8;
+      --color-primary:#0f766e; --color-primary-hover:#0d5d57; --color-primary-highlight:#d2e6e1;
+      --color-error:#a12c7b; --color-error-highlight:#e7d7e0; --color-warning:#a95a18; --color-warning-highlight:#ecd8c8; --color-success:#437a22; --color-success-highlight:#d5e3ca; --color-blue:#1859b8; --color-blue-highlight:#d0ddf4;
+      --radius-sm:.375rem; --radius-md:.625rem; --radius-lg:1rem; --radius-xl:1.5rem; --radius-full:9999px;
+      --shadow-sm:0 1px 2px oklch(0.2 0.01 80 / 0.06); --shadow-md:0 10px 30px oklch(0.2 0.01 80 / 0.10); --shadow-lg:0 24px 64px oklch(0.2 0.01 80 / 0.14);
+      --transition-interactive:180ms cubic-bezier(0.16,1,0.3,1);
+      --font-body:'Satoshi','Inter',sans-serif; --font-display:'Cabinet Grotesk','Satoshi',sans-serif;
+      --content-wide:min(1440px, calc(100vw - 2rem));
+    }
+    [data-theme="dark"] {
+      --color-bg:#090b10; --color-surface:#10141c; --color-surface-2:#151b24; --color-surface-offset:#0d1016; --color-surface-dynamic:#1e2532; --color-divider:#202937; --color-border:#2b3648;
+      --color-text:#eef3fb; --color-text-muted:#98a5bb; --color-text-faint:#647086; --color-text-inverse:#0d1016;
+      --color-primary:#5dd6cf; --color-primary-hover:#36bab2; --color-primary-highlight:#18383c;
+      --color-error:#ff68b2; --color-error-highlight:#3d2233; --color-warning:#ff9750; --color-warning-highlight:#463123; --color-success:#7fdc6c; --color-success-highlight:#213626; --color-blue:#7babff; --color-blue-highlight:#1c2c4b;
+      --shadow-sm:0 1px 2px oklch(0 0 0 / 0.24); --shadow-md:0 16px 38px oklch(0 0 0 / 0.35); --shadow-lg:0 32px 90px oklch(0 0 0 / 0.45);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth;background:var(--color-bg)}
+    body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;color:var(--color-text);background:
+      radial-gradient(circle at 20% 20%, color-mix(in oklab,var(--color-primary) 18%, transparent), transparent 28%),
+      radial-gradient(circle at 80% 0%, color-mix(in oklab,var(--color-blue) 24%, transparent), transparent 32%),
+      linear-gradient(180deg, color-mix(in oklab,var(--color-bg) 90%, #020307 10%), var(--color-bg)); overflow-x:hidden}
