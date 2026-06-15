@@ -1,149 +1,77 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Sidebar from "./components/Sidebar";
-import HeroBanner from "./components/HeroBanner";
-import MetricsRow from "./components/MetricsRow";
-import EmailScanner from "./components/EmailScanner";
-import ThreatVerdict from "./components/ThreatVerdict";
-import FingerprintPanel from "./components/FingerprintPanel";
-import LedgerPanel from "./components/LedgerPanel";
-import ToastStack from "./components/ToastStack";
-import { initialMail } from "./data/samples";
-import { scoreMail } from "./utils/scoring";
-
-export default function App() {
-  const [theme, setTheme] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-  );
-  const [mail, setMail] = useState(initialMail);
-  const [tab, setTab] = useState("scanner");
-  const [toasts, setToasts] = useState([]);
-  const [ledger, setLedger] = useState([
-    { hash: "PG-11AF92AC", domain: "paypa1-support.com", score: 9, action: "Move to Spam", source: "Node A" },
-    { hash: "PG-55CD1290", domain: "secure-bank-verification.net", score: 10, action: "Auto Delete", source: "Node C" }
-  ]);
-  const [quarantine, setQuarantine] = useState([
-    "security@paypa1-support.com",
-    "payments@secure-bank-verification.net"
-  ]);
-
-  const analysis = useMemo(() => scoreMail(mail), [mail]);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const addToast = (title, desc) => {
-    const id = Date.now() + Math.random();
-    setToasts((t) => [{ id, title, desc }, ...t].slice(0, 3));
-    setTimeout(() => {
-      setToasts((t) => t.filter((x) => x.id !== id));
-    }, 3200);
-  };
-
-  const syncToLedger = () => {
-    const entry = {
-      hash: analysis.hash,
-      domain: analysis.domain,
-      score: analysis.score,
-      action: analysis.action,
-      source: "Local Browser"
-    };
-    setLedger((prev) => [entry, ...prev.filter((item) => item.hash !== entry.hash)].slice(0, 8));
-    addToast("Ledger synchronized", `${entry.hash} was shared with connected browsers.`);
-  };
-
-  const applyAction = () => {
-    setQuarantine((prev) => (prev.includes(mail.from) ? prev : [mail.from, ...prev]));
-    addToast("Policy executed", `${analysis.action} applied for ${mail.from}.`);
-  };
-
-  return (
-    <>
-      <div className="app-shell">
-        <Sidebar
-          tab={tab}
-          setTab={setTab}
-          quarantine={quarantine}
-        />
-
-        <main className="main">
-          <HeroBanner
-            analysis={analysis}
-            theme={theme}
-            setTheme={setTheme}
-            syncToLedger={syncToLedger}
-            applyAction={applyAction}
-          />
-
-          <MetricsRow
-            analysis={analysis}
-            ledger={ledger}
-            quarantine={quarantine}
-          />
-
-          <section className="mail-grid">
-            <EmailScanner
-              mail={mail}
-              setMail={setMail}
-              syncToLedger={syncToLedger}
-              applyAction={applyAction}
-              addToast={addToast}
-            />
-
-            <ThreatVerdict analysis={analysis} />
-          </section>
-
-          <section className="grid-2">
-            <FingerprintPanel analysis={analysis} addToast={addToast} />
-            <LedgerPanel ledger={ledger} />
-          </section>
-
-          <section className="rule-grid">
-            <article className="rule-card">
-              <h4>Policy automation</h4>
-              <p>Auto-move suspicious emails to spam and hard-delete only the most critical messages according to threshold logic.</p>
-            </article>
-            <article className="rule-card">
-              <h4>Variant detection</h4>
-              <p>Reworded phishing emails can still be grouped by sender domain plus normalized wording patterns and fingerprint similarity.</p>
-            </article>
-            <article className="rule-card">
-              <h4>Operational visibility</h4>
-              <p>Security teams get a premium dashboard view with score output, triggered reasons, global sync history, and enforcement actions.</p>
-            </article>
-          </section>
-
-          <div className="footer-note">PhishGuard AI demo UI · Official presentation version for project showcase</div>
-        </main>
-      </div>
-
-      <ToastStack toasts={toasts} />
-    </>
-  );
-}
-function ThreatGauge({ analysis }) {
-  return (
-    <section className="gauge-card">
-
-      <h3>Threat Vector Score</h3>
-
-      <div className="gauge-number">
-        {analysis.score}/10
-      </div>
-
-      <div className="risk-bar">
-        <div
-          className="risk-fill"
-          style={{
-            width: `${analysis.score * 10}%`
-          }}
-        />
-      </div>
-
-      <p>{analysis.level}</p>
-
-    </section>
-  );
-}
-
-export default ThreatGauge;
+const emails = [
+      {
+        id: 1,
+        sender: 'finance@trustedledger.com',
+        senderName: 'Trusted Ledger Finance',
+        subject: 'Quarterly review packet',
+        preview: 'Here is the updated board summary and the signed PDF packet for review.',
+        body: [
+          'Hello team, attached is the signed quarterly review packet prepared for tomorrow\'s meeting.',
+          'The figures match the secure dashboard and no external action is required from you today.'
+        ],
+        attachment: 'PDF',
+        confidence: 91,
+        factors: { domain: 1.4, links: 0.4, attachment: 0.8, language: 0.5, impersonation: 0.5 },
+        tags: ['Signed PDF', 'Known sender', 'Internal review']
+      },
+      {
+        id: 2,
+        sender: 'courier-update@track-shift-delivery.net',
+        senderName: 'Parcel Shift',
+        subject: 'Delivery held: confirm address now',
+        preview: 'A courier issue requires urgent confirmation to avoid shipment cancellation tonight.',
+        body: [
+          'We tried to complete your shipment but your address failed verification.',
+          'Confirm immediately through the secure link or the parcel will be destroyed within 12 hours.'
+        ],
+        attachment: 'HTML link',
+        confidence: 84,
+        factors: { domain: 1.8, links: 2.0, attachment: 0.9, language: 1.7, impersonation: 0.9 },
+        tags: ['Urgent', 'Link present', 'Courier brand']
+      },
+      {
+        id: 3,
+        sender: 'hr-payroll@org-payroll-secure.co',
+        senderName: 'Payroll Operations',
+        subject: 'Salary correction form',
+        preview: 'Open the attached macro sheet to avoid delays in this month\'s processing.',
+        body: [
+          'Your payroll file contains a mismatch in tax residency data.',
+          'Enable editing and macros in the attached workbook so the correction can be submitted today.'
+        ],
+        attachment: 'XLSM',
+        confidence: 96,
+        factors: { domain: 2.0, links: 1.1, attachment: 2.5, language: 1.9, impersonation: 2.0 },
+        tags: ['Macro file', 'Urgent', 'Payroll mimicry']
+      },
+      {
+        id: 4,
+        sender: 'security@workspace-notify.ai',
+        senderName: 'Workspace Security',
+        subject: 'New sign-in from Punjab',
+        preview: 'We detected a new device sign-in. Review the activity center if this was not you.',
+        body: [
+          'A new browser session was detected from Ludhiana, Punjab.',
+          'If this was not you, visit your known security dashboard directly rather than using email links.'
+        ],
+        attachment: 'None',
+        confidence: 79,
+        factors: { domain: 0.8, links: 1.2, attachment: 0.2, language: 0.9, impersonation: 0.8 },
+        tags: ['Security notice', 'Location mention', 'No attachment']
+      },
+      {
+        id: 5,
+        sender: 'accounts@vendor-clearing-mail.com',
+        senderName: 'Vendor Clearing',
+        subject: 'Invoice 88421 overdue — action required',
+        preview: 'A payment dispute notice includes a compressed archive and alternate settlement link.',
+        body: [
+          'Your account is under review because invoice 88421 remains unpaid after repeated notices.',
+          'Open the archive and complete the alternate transfer within four hours to prevent legal escalation.'
+        ],
+        attachment: 'ZIP archive',
+        confidence: 94,
+        factors: { domain: 2.1, links: 1.7, attachment: 2.2, language: 1.8, impersonation: 1.5 },
+        tags: ['Archive', 'Payment pressure', 'Threat language']
+      }
+    ];
