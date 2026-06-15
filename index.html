@@ -27,4 +27,162 @@
   </div>
 </section>
   </body> 
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="gridline" aria-hidden="true"></div>
+
+    <div class="content">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="24" height="24" fill="none" aria-label="MailShield logo">
+              <path d="M10 20 32 8l22 12v24L32 56 10 44Z" stroke="currentColor" stroke-width="3"/>
+              <path d="M21 28l11 6 11-6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M32 34v13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-copy">
+            <strong>MailShield 3D</strong>
+            <span>Vector risk command center</span>
+          </div>
+        </div>
+        <nav class="topnav" aria-label="Primary">
+          <a class="nav-chip active" href="#overview">Overview</a>
+          <a class="nav-chip" href="#engine">Engine</a>
+          <a class="nav-chip" href="#inbox">Inbox</a>
+          <a class="nav-chip" href="#workflow">Workflow</a>
+        </nav>
+        <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </header>
+
+      <main id="main">
+        <section class="hero" id="overview">
+          <div class="hero-copy" data-reveal>
+            <div class="eyebrow">Client-side fraud triage engine</div>
+            <h1>Immersive 3D email defense with browser-side vector scoring.</h1>
+            <p>This GitHub-ready experience simulates a premium fraud-analysis console where every message receives a vector risk score, scores of 9 and above are routed to spam, and scores of 7 or above trigger a blocking pre-open alert before the email can be viewed.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-scroll="#inbox">Launch inbox analyzer</button>
+              <button class="ghost-btn" data-scroll="#engine">Inspect scoring engine</button>
+            </div>
+            <div class="hero-metrics">
+              <article class="metric-card">
+                <span>Spam rule</span>
+                <strong>&ge; 9.0</strong>
+              </article>
+              <article class="metric-card">
+                <span>Alert rule</span>
+                <strong>&ge; 7.0</strong>
+              </article>
+              <article class="metric-card">
+                <span>3D nodes</span>
+                <strong id="node-count">96</strong>
+              </article>
+            </div>
+          </div>
+          <div class="hero-stage" aria-hidden="true" data-reveal>
+            <div class="orbital-core">
+              <div class="halo"></div>
+              <div class="vector-ring"></div>
+              <div class="core-sphere"></div>
+            </div>
+            <article class="floating-card card-a">
+              <h3>Link mismatch cluster</h3>
+              <p>Display URLs and destination vectors split apart in the anomaly field.</p>
+              <div class="score"><span>Risk</span><strong>8.2</strong></div>
+            </article>
+            <article class="floating-card card-b">
+              <h3>Sender trust drift</h3>
+              <p>Low domain age and recent reputation decay expand the fraud radius.</p>
+              <div class="score"><span>Risk</span><strong>9.4</strong></div>
+            </article>
+            <article class="floating-card card-c">
+              <h3>Language pressure</h3>
+              <p>Urgency phrasing, payment pressure, and unusual punctuation increase the vector score.</p>
+              <div class="score"><span>Risk</span><strong>7.1</strong></div>
+            </article>
+            <div class="status-bar">
+              <div class="status-pill"><span>Latency</span><strong>42 ms local analysis</strong></div>
+              <div class="status-pill"><span>Mode</span><strong>Heuristic + vector simulation</strong></div>
+              <div class="status-pill"><span>Action</span><strong>Route, alert, or open</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard" id="engine">
+          <aside class="sidebar" data-reveal>
+            <div class="panel">
+              <div class="section-head">
+                <div>
+                  <h2>Risk logic</h2>
+                  <p>The UI shows the exact routing rule so the product behavior is transparent.</p>
+                </div>
+              </div>
+              <div class="risk-legend">
+                <div class="legend-item">
+                  <strong>0.0–6.9 opens normally</strong>
+                  <span>Low or moderate signal, no blocking action.</span>
+                </div>
+                <div class="legend-item">
+                  <strong>7.0–8.9 warns first</strong>
+                  <span>User sees a blocking alert before reading the message.</span>
+                </div>
+                <div class="legend-item">
+                  <strong>9.0–10.0 routes to spam</strong>
+                  <span>The message is placed into the spam lane inside the browser UI.</span>
+                </div>
+              </div>
+
+              <div class="section-head" style="margin-top:var(--space-6)">
+                <div>
+                  <h2>Signal stack</h2>
+                  <p>These weighted features create the vector score.</p>
+                </div>
+              </div>
+              <div class="rules-list">
+                <div class="rule-item"><strong>Domain trust</strong><span>Disposable senders, lookalikes, SPF / DKIM hints.</span></div>
+                <div class="rule-item"><strong>Link behavior</strong><span>Redirect chains, shortened links, mismatch patterns.</span></div>
+                <div class="rule-item"><strong>Attachment risk</strong><span>Executable payloads, macro bait, archive nesting.</span></div>
+                <div class="rule-item"><strong>Language pressure</strong><span>Urgency, secrecy, invoice threats, unusual grammar.</span></div>
+                <div class="rule-item"><strong>Brand mimicry</strong><span>Impersonation of banks, HR teams, or couriers.</span></div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="main-panel">
+            <div class="stack-grid" data-reveal>
+              <section class="glass-card">
+                <div class="section-head">
+                  <div>
+                    <h2>Decision engine</h2>
+                    <p>The score updates the route instantly with a cinematic vector meter.</p>
+                  </div>
+                  <div class="risk-chip risk-safe" id="engine-status">Safe</div>
+                </div>
+                <div class="vector-meter" aria-label="Vector score meter">
+                  <div class="vector-fill" id="vector-fill"></div>
+                </div>
+                <div class="detail-grid">
+                  <div class="stat-box">
+                    <span>Current score</span>
+                    <strong id="current-score">3.6</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span>Routing output</span>
+                    <strong id="route-output">Open inbox</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span>Threshold state</span>
+                    <strong id="threshold-output">Below alert</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span>Vector class</span>
+                    <strong id="class-output">Stable</strong>
+                  </div>
+                </div>
+              </section>
 </html>
