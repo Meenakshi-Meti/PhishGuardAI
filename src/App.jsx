@@ -75,3 +75,78 @@ const emails = [
         tags: ['Archive', 'Payment pressure', 'Threat language']
       }
     ];
+    const appState = {
+      selectedId: 1,
+      theme: matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+      pendingOpenId: null,
+      spamIds: new Set()
+    };
+
+    const factorWeights = { domain: 1.6, links: 1.8, attachment: 1.7, language: 1.5, impersonation: 1.6 };
+    const factorLabels = {
+      domain: 'Domain trust',
+      links: 'Link behavior',
+      attachment: 'Attachment risk',
+      language: 'Language pressure',
+      impersonation: 'Brand mimicry'
+    };
+
+    const els = {
+      mailList: document.getElementById('mail-list'),
+      factorBars: document.getElementById('factor-bars'),
+      detailSubject: document.getElementById('detail-subject'),
+      detailFrom: document.getElementById('detail-from'),
+      detailRiskChip: document.getElementById('detail-risk-chip'),
+      detailRoute: document.getElementById('detail-route'),
+      detailAlert: document.getElementById('detail-alert'),
+      detailAttachment: document.getElementById('detail-attachment'),
+      detailConfidence: document.getElementById('detail-confidence'),
+      detailEyebrow: document.getElementById('detail-eyebrow'),
+      mailBody: document.getElementById('mail-body'),
+      currentScore: document.getElementById('current-score'),
+      routeOutput: document.getElementById('route-output'),
+      thresholdOutput: document.getElementById('threshold-output'),
+      classOutput: document.getElementById('class-output'),
+      engineStatus: document.getElementById('engine-status'),
+      vectorFill: document.getElementById('vector-fill'),
+      logList: document.getElementById('log-list'),
+      alertModal: document.getElementById('alert-modal'),
+      alertFactors: document.getElementById('alert-factors'),
+      alertCopy: document.getElementById('alert-copy'),
+      continueOpen: document.getElementById('continue-open'),
+      closeAlert: document.getElementById('close-alert'),
+      openMailBtn: document.getElementById('open-mail-btn'),
+      sendSpamBtn: document.getElementById('send-spam-btn'),
+      simulateBtn: document.getElementById('simulate-btn')
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function computeScore(mail) {
+      const weighted = Object.entries(mail.factors).reduce((sum, [key, value]) => sum + value * factorWeights[key], 0);
+      return Number(clamp(weighted / 1.6, 0, 10).toFixed(1));
+    }
+
+    function classifyScore(score) {
+      if (score >= 9) return { route: 'Spam', alert: 'Forced spam', label: 'Spam', chip: 'risk-spam', className: 'Critical' };
+      if (score >= 7) return { route: 'Alert gate', alert: 'Warning shown', label: 'Alert', chip: 'risk-alert', className: 'Elevated' };
+      return { route: 'Inbox', alert: 'No warning', label: 'Safe', chip: 'risk-safe', className: 'Stable' };
+    }
+
+    function initials(name) {
+      return name.split(' ').map(x => x[0]).slice(0, 2).join('').toUpperCase();
+    }
+
+    function getMail(id) {
+      return emails.find(mail => mail.id === id) || emails[0];
+    }
+
+    function routeOverride(mail, meta) {
+      if (appState.spamIds.has(mail.id)) {
+        return { route: 'Spam', alert: meta.alert, label: 'Spam', chip: 'risk-spam', className: 'Critical' };
+      }
+      return meta;
+    }
+
