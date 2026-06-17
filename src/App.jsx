@@ -149,4 +149,42 @@ const emails = [
       }
       return meta;
     }
+    function logEvent(title, copy) {
+      const item = document.createElement('div');
+      item.className = 'log-item';
+      item.innerHTML = `<strong>${title}</strong><span>${copy}</span>`;
+      els.logList.prepend(item);
+      while (els.logList.children.length > 6) els.logList.removeChild(els.logList.lastElementChild);
+    }
+    function renderList() {
+      els.mailList.innerHTML = '';
+      emails.forEach(mail => {
+        const score = computeScore(mail);
+        const meta = routeOverride(mail, classifyScore(score));
+        const article = document.createElement('article');
+        article.className = `mail-item ${mail.id === appState.selectedId ? 'active' : ''}`;
+        article.tabIndex = 0;
+        article.setAttribute('role', 'button');
+        article.setAttribute('aria-label', `Inspect ${mail.subject}`);
+        article.innerHTML = `
+          <div class="mail-avatar">${initials(mail.senderName)}</div>
+          <div class="mail-meta">
+            <h3>${mail.subject}</h3>
+            <p>${mail.sender} &mdash; ${mail.preview}</p>
+            <div class="mail-tags">
+              ${mail.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+          </div>
+          <div class="risk-chip ${meta.chip}">${meta.label} ${score.toFixed(1)}</div>
+        `;
+        article.addEventListener('click', () => selectMail(mail.id));
+        article.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectMail(mail.id);
+          }
+        });
+        els.mailList.appendChild(article);
+      });
+    }
 
