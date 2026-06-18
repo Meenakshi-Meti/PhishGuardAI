@@ -188,3 +188,40 @@ const emails = [
       });
     }
 
+    function renderDetail() {
+      const mail = getMail(appState.selectedId);
+      const score = computeScore(mail);
+      const meta = routeOverride(mail, classifyScore(score));
+
+      els.detailEyebrow.textContent = meta.route === 'Spam' ? 'Spam lane' : meta.route === 'Alert gate' ? 'Protected open' : 'Open inbox';
+      els.detailSubject.textContent = mail.subject;
+      els.detailFrom.textContent = `${mail.senderName} • ${mail.sender}`;
+      els.detailRiskChip.className = `risk-chip ${meta.chip}`;
+      els.detailRiskChip.textContent = `Risk ${score.toFixed(1)}`;
+      els.detailRoute.textContent = meta.route;
+      els.detailAlert.textContent = meta.alert;
+      els.detailAttachment.textContent = mail.attachment;
+      els.detailConfidence.textContent = `${mail.confidence}%`;
+      els.currentScore.textContent = score.toFixed(1);
+      els.routeOutput.textContent = meta.route === 'Alert gate' ? 'Warn before open' : meta.route === 'Spam' ? 'Route to spam' : 'Open inbox';
+      els.thresholdOutput.textContent = score >= 9 ? 'Spam threshold' : score >= 7 ? 'Alert threshold' : 'Below alert';
+      els.classOutput.textContent = meta.className;
+      els.engineStatus.className = `risk-chip ${meta.chip}`;
+      els.engineStatus.textContent = meta.label;
+      els.vectorFill.style.width = `${score * 10}%`;
+      els.mailBody.innerHTML = mail.body.map(p => `<p>${p}</p>`).join('');
+
+      els.factorBars.innerHTML = '';
+      Object.entries(mail.factors).forEach(([key, value]) => {
+        const width = clamp(value / 2.6 * 100, 8, 100);
+        const row = document.createElement('div');
+        row.className = 'factor';
+        row.innerHTML = `
+          <small>${factorLabels[key]}</small>
+          <div class="factor-track"><i style="width:${width}%"></i></div>
+          <b>${value.toFixed(1)}</b>
+        `;
+        els.factorBars.appendChild(row);
+      });
+    }
+
