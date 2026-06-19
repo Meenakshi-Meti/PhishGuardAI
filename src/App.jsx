@@ -224,4 +224,38 @@ const emails = [
         els.factorBars.appendChild(row);
       });
     }
+    function selectMail(id) {
+      appState.selectedId = id;
+      renderList();
+      renderDetail();
+      const mail = getMail(id);
+      const score = computeScore(mail);
+      logEvent('Mail selected', `${mail.subject} scored ${score.toFixed(1)} and is ready for review.`);
+    }
+
+    function openMailFlow() {
+      const mail = getMail(appState.selectedId);
+      const score = computeScore(mail);
+      if (appState.spamIds.has(mail.id) || score >= 9) {
+        appState.spamIds.add(mail.id);
+        renderList();
+        renderDetail();
+        logEvent('Spam routing executed', `${mail.subject} was routed to spam because the score reached ${score.toFixed(1)}.`);
+        return;
+      }
+      if (score >= 7) {
+        appState.pendingOpenId = mail.id;
+        els.alertFactors.innerHTML = Object.entries(mail.factors)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 3)
+          .map(([key, value]) => `<div class="alert-factor"><span>${factorLabels[key]}</span><strong>${value.toFixed(1)}</strong></div>`)
+          .join('');
+        els.alertCopy.textContent = `"${mail.subject}" scored ${score.toFixed(1)}. Review the strongest risk signals before you continue.`;
+        els.alertModal.classList.add('open');
+        els.alertModal.setAttribute('aria-hidden', 'false');
+        logEvent('Pre-open alert armed', `${mail.subject} crossed the 7.0 threshold and requires confirmation.`);
+        return;
+      }
+      logEvent('Mail opened', `${mail.subject} opened directly because the score remained below the alert threshold.`);
+    }
 
