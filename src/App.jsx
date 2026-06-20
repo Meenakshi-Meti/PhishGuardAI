@@ -259,3 +259,40 @@ const emails = [
       logEvent('Mail opened', `${mail.subject} opened directly because the score remained below the alert threshold.`);
     }
 
+    function closeAlert() {
+      els.alertModal.classList.remove('open');
+      els.alertModal.setAttribute('aria-hidden', 'true');
+      appState.pendingOpenId = null;
+    }
+
+    function forceSpam() {
+      const mail = getMail(appState.selectedId);
+      appState.spamIds.add(mail.id);
+      renderList();
+      renderDetail();
+      logEvent('Manual spam override', `${mail.subject} was manually moved to spam.`);
+    }
+
+    function rerunAnalysis() {
+      const mail = getMail(appState.selectedId);
+      const keys = Object.keys(mail.factors);
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      const delta = (Math.random() * 0.6) - 0.2;
+      mail.factors[key] = Number(clamp(mail.factors[key] + delta, 0.2, 2.6).toFixed(1));
+      renderList();
+      renderDetail();
+      logEvent('Analysis refreshed', `${factorLabels[key]} shifted and the vector score was recalculated.`);
+    }
+
+    function applyTheme(theme) {
+      appState.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      const toggle = document.querySelector('[data-theme-toggle]');
+      if (toggle) {
+        toggle.innerHTML = theme === 'dark'
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      }
+    }
+
+
