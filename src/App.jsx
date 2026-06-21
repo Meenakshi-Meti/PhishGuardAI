@@ -295,4 +295,109 @@ const emails = [
       }
     }
 
+    function initTheme() {
+      applyTheme(appState.theme);
+      document.querySelector('[data-theme-toggle]').addEventListener('click', () => {
+        applyTheme(appState.theme === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    function initScroll() {
+      document.querySelectorAll('[data-scroll]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.querySelector(btn.dataset.scroll);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('revealed');
+        });
+      }, { threshold: 0.18 });
+      document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+    }
+
+    function initCanvas() {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      const nodes = Array.from({ length: 96 }, () => ({
+        x: Math.random(), y: Math.random(), z: Math.random(),
+        vx: (Math.random() - 0.5) * 0.0008, vy: (Math.random() - 0.5) * 0.0008, vz: (Math.random() - 0.5) * 0.0008
+      }));
+      const pointer = { x: 0, y: 0, active: false };
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function resize() {
+        canvas.width = innerWidth * devicePixelRatio;
+        canvas.height = innerHeight * devicePixelRatio;
+        canvas.style.width = innerWidth + 'px';
+        canvas.style.height = innerHeight + 'px';
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      }
+      resize();
+      addEventListener('resize', resize);
+      addEventListener('pointermove', e => {
+        pointer.x = e.clientX / innerWidth - 0.5;
+        pointer.y = e.clientY / innerHeight - 0.5;
+        pointer.active = true;
+      });
+
+      function project(node, time) {
+        const depth = 1.4 + node.z * 1.6;
+        const swirl = Math.sin(time * 0.00035 + node.z * 6.28) * 0.04;
+        const px = (node.x - 0.5 + swirl + (pointer.active ? pointer.x * 0.05 : 0)) * innerWidth / depth + innerWidth / 2;
+        const py = (node.y - 0.5 + Math.cos(time * 0.00028 + node.x * 4.3) * 0.06 + (pointer.active ? pointer.y * 0.05 : 0)) * innerHeight / depth + innerHeight / 2;
+        const size = (1 - node.z) * 3.4 + 0.5;
+        return { px, py, size, depth };
+      }
+
+      function step(time) {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        const grad = ctx.createRadialGradient(innerWidth * 0.5, innerHeight * 0.35, 0, innerWidth * 0.5, innerHeight * 0.35, innerWidth * 0.7);
+        grad.addColorStop(0, 'rgba(93,214,207,0.12)');
+        grad.addColorStop(0.45, 'rgba(123,171,255,0.08)');
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, innerWidth, innerHeight);
+
+        nodes.forEach(n => {
+          if (!reduce) {
+            n.x += n.vx; n.y += n.vy; n.z += n.vz;
+            if (n.x < 0 || n.x > 1) n.vx *= -1;
+            if (n.y < 0 || n.y > 1) n.vy *= -1;
+            if (n.z < 0 || n.z > 1) n.vz *= -1;
+          }
+        });
+
+        const pts = nodes.map(n => project(n, time));
+        for (let i = 0; i < pts.length; i++) {
+          for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].px - pts[j].px;
+            const dy = pts[i].py - pts[j].py;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 120) {
+              ctx.strokeStyle = `rgba(110, 196, 235, ${0.12 - dist / 1000})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(pts[i].px, pts[i].py);
+              ctx.lineTo(pts[j].px, pts[j].py);
+              ctx.stroke();
+            }
+          }
+        }
+
+        pts.forEach((p, i) => {
+          const g = ctx.createRadialGradient(p.px, p.py, 0, p.px, p.py, p.size * 8);
+          g.addColorStop(0, i % 7 === 0 ? 'rgba(255,104,178,0.95)' : 'rgba(93,214,207,0.95)');
+          g.addColorStop(1, 'rgba(93,214,207,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(p.px, p.py, p.size * 2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
 
