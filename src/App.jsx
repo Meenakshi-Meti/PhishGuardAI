@@ -399,5 +399,29 @@ const emails = [
       }
       requestAnimationFrame(step);
     }
+    function initActions() {
+      els.openMailBtn.addEventListener('click', openMailFlow);
+      els.sendSpamBtn.addEventListener('click', forceSpam);
+      els.simulateBtn.addEventListener('click', rerunAnalysis);
+      els.closeAlert.addEventListener('click', closeAlert);
+      els.continueOpen.addEventListener('click', () => {
+        const mail = getMail(appState.pendingOpenId);
+        if (mail) logEvent('Override confirmed', `${mail.subject} was opened after the warning dialog.`);
+        closeAlert();
+      });
+      els.alertModal.addEventListener('click', e => {
+        if (e.target === els.alertModal) closeAlert();
+      });
+      addEventListener('keydown', e => {
+        if (e.key === 'Escape' && els.alertModal.classList.contains('open')) closeAlert();
+      });
+    }
+
+    initTheme();
+    initScroll();
+    initCanvas();
+    initActions();
+    renderList();
+    renderDetail();
 
 
