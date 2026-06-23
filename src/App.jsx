@@ -385,7 +385,7 @@ const emails = [
             }
           }
         }
-
+        
         pts.forEach((p, i) => {
           const g = ctx.createRadialGradient(p.px, p.py, 0, p.px, p.py, p.size * 8);
           g.addColorStop(0, i % 7 === 0 ? 'rgba(255,104,178,0.95)' : 'rgba(93,214,207,0.95)');
