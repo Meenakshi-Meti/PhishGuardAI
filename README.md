@@ -1,16 +1,141 @@
-# React + Vite
+# 🛡️ PhishGuard AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PhishGuard AI is an AI-powered phishing detection platform that helps users identify malicious URLs, emails, files, and QR codes before they become victims of cyber attacks. It combines machine learning, heuristic analysis, and phishing intelligence to provide fast, reliable, and user-friendly threat detection.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+- 🔗 URL Phishing Detection
+- 📧 Email Phishing Analysis
+- 📄 File Security Scanner
+- 📱 QR Code Scanner
+- 🤖 AI-Based Threat Detection
+- 📊 Risk Score & Threat Analysis
+- ⚡ Fast and Responsive Interface
+- 🌙 Modern & User-Friendly UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React
+- Vite
+- JavaScript (ES6+)
+- CSS Modules
+- HTML5
+- CSS3
+
+### Backend (Planned)
+- Node.js
+- Express.js
+
+### AI / Machine Learning (Planned)
+- Python
+- Scikit-learn
+- TensorFlow
+- NLP Models
+
+### Database (Planned)
+- MongoDB
+
+---
+
+## ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/your-username/PhishGuardAI.git
+```
+
+Move into the project directory
+
+```bash
+cd PhishGuardAI
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Open your browser and visit
+
+```
+http://localhost:5173
+```
+
+---
+
+## 📸 Screens
+
+- Home Page
+- URL Scanner
+- Email Scanner
+- File Scanner
+- QR Scanner
+- Threat Analysis Dashboard
+
+---
+
+## 🎯 Future Enhancements
+
+- Chrome Extension
+- Gmail Integration
+- Outlook Integration
+- Real-time Threat Intelligence
+- Blockchain-based Phishing Signature Storage (GPSSL)
+- User Authentication
+- Dashboard Analytics
+- Admin Panel
+- Email Report Generation
+- Multi-language Support
+
+---
+
+## 💡 Project Goal
+
+The goal of PhishGuard AI is to provide a simple, fast, and intelligent solution that helps users detect phishing attempts before they cause financial or personal data loss.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository.
+2. Create a new branch.
+3. Commit your changes.
+4. Push the branch.
+5. Open a Pull Request.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👩‍💻 Author
+
+**Meenakshi**
+
+Second-Year Computer Science Engineering Student
+
+Passionate about Cybersecurity, AI, Web Development, and solving real-world security problems through technology.
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
