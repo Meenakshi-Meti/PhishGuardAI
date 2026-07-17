@@ -237,3 +237,135 @@ body{
     @media (max-width: 760px){.content{padding:var(--space-3)}.topbar{grid-template-columns:1fr auto;grid-template-areas:'brand toggle' 'nav nav'}.brand{grid-area:brand}.topnav{grid-area:nav;justify-content:flex-start;overflow:auto;padding-bottom:.25rem}.theme-toggle{grid-area:toggle;justify-self:end}.hero{min-height:auto;padding-top:var(--space-10)}.hero-metrics,.detail-grid,.alert-factors,.timeline{grid-template-columns:1fr}.status-bar{left:4%;right:4%;bottom:2%;padding:var(--space-3);flex-direction:column}.floating-card{width:min(100%,280px)}.card-a{left:0}.card-c{right:0}.mail-item{grid-template-columns:auto 1fr}.mail-item>.risk-chip{grid-column:1/-1;justify-self:start}.factor{grid-template-columns:1fr}.factor-track{order:3}}
     @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}[data-reveal]{opacity:1;transform:none}}
   </style>
+body{
+
+background:
+radial-gradient(circle at top,#14213d 0%,#050816 45%,#02040d 100%);
+
+color:white;
+
+overflow-x:hidden;
+
+font-family:Poppins,sans-serif;
+
+}
+:root{
+  --bg:#050816;
+  --card:#101827;
+  --card2:#16233a;
+
+  --primary:#00E5FF;
+  --secondary:#7C3AED;
+
+  --success:#00FF88;
+  --danger:#FF4D6D;
+
+  --text:#ffffff;
+  --text2:#b8c2d9;
+
+  --border:rgba(255,255,255,.08);
+
+  --shadow:
+      0 10px 30px rgba(0,0,0,.45);
+
+  --radius:20px;
+}
+.card{
+
+background:rgba(255,255,255,.05);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+transition:.4s;
+
+}
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:
+0 0 30px cyan;
+
+}
+button{
+
+padding:15px 35px;
+
+border:none;
+
+border-radius:12px;
+
+background:#00E5FF;
+
+color:black;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+button:hover{
+
+transform:scale(1.08);
+
+box-shadow:
+
+0 0 20px cyan,
+
+0 0 50px cyan;
+
+}
+h1{
+
+background:linear-gradient(
+90deg,
+#00E5FF,
+#7C3AED,
+#00E5FF
+);
+
+background-size:300%;
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+animation:gradient 6s infinite;
+
+}
+@keyframes gradient{
+
+0%{
+
+background-position:0%;
+
+}
+
+100%{
+
+background-position:300%;
+
+}
+
+}
+input{
+
+background:#111827;
+
+border:2px solid #23334d;
+
+padding:16px;
+
+color:white;
+
+border-radius:12px;
+
+transition:.4s;
+
+}
