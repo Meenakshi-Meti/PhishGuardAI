@@ -19,7 +19,21 @@ function Navbar(){
             <button className ="signup-btn">Sign Up</button>
             
             </div>
+            <nav
+  className="
+    fixed
+    top-0
+    left-0
+    w-full
+    bg-white/5
+    backdrop-blur-xl
+    border-b
+    border-white/10
+    z-50
+  "
+></nav>
         </nav>
+
     );
 }
 export default Navbar;

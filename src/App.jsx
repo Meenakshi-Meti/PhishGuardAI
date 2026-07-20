@@ -1,3 +1,43 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import Scanner from "./components/Scanner";
+import "./App.css";
+
+function App() {
+  return (
+    <div className="app">
+
+      {/* Full Page Background */}
+      <div className="background">
+        <div className="grid"></div>
+
+        <div className="blob blob1"></div>
+        <div className="blob blob2"></div>
+        <div className="blob blob3"></div>
+
+        <div className="ring ring1"></div>
+        <div className="ring ring2"></div>
+        <div className="ring ring3"></div>
+
+        <div className="scan-line"></div>
+      </div>
+
+      {/* Everything else */}
+      <div className="content">
+        <Navbar />
+        <Hero />
+        <Features />
+        <Scanner />
+        <Footer />
+      </div>
+
+    </div>
+  );
+}
+
+
+
 const emails = [
       {
         id: 1,
@@ -424,4 +464,4 @@ const emails = [
     renderList();
     renderDetail();
 
-
+export default App;

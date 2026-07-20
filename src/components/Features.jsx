@@ -18,7 +18,21 @@ function Features(){
                 <h3>QR Scanner</h3>
                 <p>Check QR Codes Safely.</p>
             </div>
+            <nav
+  className="
+    fixed
+    top-0
+    left-0
+    w-full
+    bg-white/5
+    backdrop-blur-xl
+    border-b
+    border-white/10
+    z-50
+  "
+></nav>
         </section>
+        
     );
 }
 export default Features;

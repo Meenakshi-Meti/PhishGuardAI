@@ -1,22 +1,23 @@
-function Hero(){
-    return (
-        <section class="hero">
+function Hero() {
+  return (
+    <section className="hero">
 
-            <div className="hero-left">
-                <span className ="badge">AI-Powered Threat Detection</span>
+      {/* Background Effects */}
+      <div className="blob blob1"></div>
+      <div className="blob blob2"></div>
+      <div className="blob blob3"></div>
 
-                <h1>Detect Phishing Websites Before They Steal</h1>
+      {/* Hero Content */}
+      <div className="hero-content">
+        <h1>PhishGuard AI</h1>
+        <p>AI Powered Phishing Detection</p>
 
-                <p>AI-Powered phishing detection system for websites, emails and files.</p>
-            <div className ="hero-buttons">
-            <button>Start Free Scan</button>
-            <button>Watch Demo</button>
-            </div>
-            </div>
-            <div className="hero-right">
-                <shield3D />
-            </div>
-        </section>
-    );
+        <button>Scan Now</button>
+      </div>
+      <div className="bg-slate-900/40 backdrop-blur-lg"></div>
+
+    </section>
+  );
 }
+
 export default Hero;
