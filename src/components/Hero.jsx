@@ -2,7 +2,7 @@ function Hero() {
   return (
     <section className="hero">
 
-      {/* Background Effects */}
+      
       <div className="blob blob1"></div>
       <div className="blob blob2"></div>
       <div className="blob blob3"></div>
